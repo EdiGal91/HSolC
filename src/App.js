@@ -5,7 +5,7 @@ import FormList from "./components/FormList";
 import NewForm from "./components/NewForm";
 import FormBuilder from "./components/FormBuilder";
 
-const BASE_URL = 'http://ec2-34-228-222-109.compute-1.amazonaws.com'
+const BASE_URL = 'https://hsol-server.herokuapp.com'
 
 function App() {
   const [forms, setForms] = useState([]);
