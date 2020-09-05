@@ -5,6 +5,8 @@ import FormList from "./components/FormList";
 import NewForm from "./components/NewForm";
 import FormBuilder from "./components/FormBuilder";
 
+const BASE_URL = 'http://ec2-34-228-222-109.compute-1.amazonaws.com'
+
 function App() {
   const [forms, setForms] = useState([]);
   const [toFetch, setToFetch] = useState(true);
@@ -15,20 +17,20 @@ function App() {
   }
 
   const addNewForm = async (title) => {
-    await axios.post("http://localhost:3001/api/forms", {
+    await axios.post(`${BASE_URL}/api/forms`, {
       title,
     });
     setToFetch(true);
   };
 
   const deleteForm = async (formId) => {
-    await axios.delete(`http://localhost:3001/api/forms/${formId}`);
+    await axios.delete(`${BASE_URL}/api/forms/${formId}`);
     setSelectedForm(null)
     setToFetch(true);
   };
 
   const addNewQuestion = async (question) => {
-    const {data: updatedForm} = await axios.post(`http://localhost:3001/api/forms/${selectedForm._id}/questions`, {
+    const {data: updatedForm} = await axios.post(`${BASE_URL}/api/forms/${selectedForm._id}/questions`, {
       question,
     });
     setSelectedForm(updatedForm)
@@ -36,11 +38,8 @@ function App() {
   };
 
   const deleteQuestion = async question => {
-    console.log('deleteQuestion', question)
-    axios.defaults.headers.delete = { "Content-Type": "application/json;charset=utf-8" };
-
     const { data: updatedForm } = await axios.delete(
-      `http://localhost:3001/api/forms/${selectedForm._id}/questions/${question}`
+      `${BASE_URL}/api/forms/${selectedForm._id}/questions/${question}`
     );
     setSelectedForm(updatedForm)
     setToFetch(true)
@@ -50,7 +49,7 @@ function App() {
     if (!toFetch) return;
     (async () => {
       const { data: forms } = await axios.get(
-        "http://localhost:3001/api/forms"
+        `${BASE_URL}/api/forms`
       );
       setForms(forms);
       setToFetch(false);
